@@ -38,5 +38,5 @@ if [ $? -eq 0 ]; then
   fi
 
 else
-  echo "An error occurred during commit. Changes not pushed ."
+  echo "An error occurred during commit. Changes not pushed."
 fi
