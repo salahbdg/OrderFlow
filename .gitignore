@@ -1,0 +1,26 @@
+# Java / Maven
+backend/target/
+*.class
+*.jar
+*.war
+
+# IntelliJ
+.idea/
+*.iml
+
+# VSCode
+.vscode/
+frontend/.angular/
+frontend/node_modules/
+frontend/dist/
+
+# Docker
+docker/data/
+
+# Environment files — NEVER commit secrets
+.env
+*.env.local
+
+# OS
+.DS_Store
+Thu
