@@ -476,13 +476,13 @@ mkdir -p src/main/java/com/orderflow/{domain/{model,event,exception,port/{in,out
 Senior Engineer Mindset: Kafka is not a message queue. It's a distributed commit log. The difference matters: a queue deletes messages after consumption. Kafka retains them. Every consumer reads at its own pace. You can replay events from the beginning of time. This is why Kafka is used for financial systems, audit logs, and anywhere event history matters.
 
 Complete event flow
-Angular → POST /api/orders
+Angular → POST /api/orders 
               │
               ▼
-        OrderController
+        OrderController 
               │
               ▼
-        OrderService.createOrder()
+        OrderService.createOrder() 
               │
         ┌─────┴──────┐
         │            │
