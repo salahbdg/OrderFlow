@@ -1,0 +1,59 @@
+spring:
+  application:
+    name: orderflow-backend
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/orderflow
+    username: orderflow_user
+    password: orderflow_pass
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10        # Connection pool size — tune for production
+      minimum-idle: 2
+      connection-timeout: 30000
+
+  jpa:
+    hibernate:
+      ddl-auto: validate           # NEVER 'create' or 'update' in production
+                                   # 'validate' checks schema matches entities
+    show-sql: false                # true only for debugging, never in production
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: orderflow-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "com.orderflow.*"
+
+server:
+  port: 8080
+
+# Actuator — exposes /actuator/health for Docker health checks
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: when-authorized
+
+logging:
+  level:
+    com.orderflow: DEBUG
+    org.springframework.kafka: INFO
